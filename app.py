@@ -1,12 +1,10 @@
 # app.py
 
 import streamlit as st
-from calculadora_backend import Backend # Importa a classe do outro arquivo
+from calculadora_backend import Backend
 
-# Instancia o backend
 calc = Backend()
 
-# --- Configuração da Página ---
 st.set_page_config(page_title="Calculadora", layout="centered")
 
 st.title("Calculadora com Streamlit 🎈")
@@ -63,9 +61,6 @@ def handle_click(button_value):
         else:
             st.session_state.expression += button_value
 
-# --- Layout da Calculadora ---
-# --- Layout da Calculadora (CORRIGIDO) ---
-
 # Visor da calculadora
 st.text_input("Cálculo", st.session_state.expression, key="display", disabled=True)
 
@@ -81,8 +76,6 @@ button_rows = [
 for row in button_rows:
     cols = st.columns(4)
     for i, button_label in enumerate(row):
-        # --- INÍCIO DA CORREÇÃO ---
-        # Cria uma chave segura para o botão, substituindo caracteres especiais
         key_safe_label = button_label
         if button_label == '÷':
             key_safe_label = 'divide'
@@ -92,14 +85,10 @@ for row in button_rows:
             key_safe_label = 'subtract'
         elif button_label == '+':
             key_safe_label = 'add'
-        
-        # Usa a chave segura (key_safe_label) para o parâmetro key, 
-        # mas o rótulo original (button_label) para o que é exibido.
+
         if cols[i].button(button_label, key=f"btn_{key_safe_label}", use_container_width=True):
             handle_click(button_label)
             st.rerun()
-            
-        # --- FIM DA CORREÇÃO ---
 st.markdown("---")
 st.subheader("Outras Funções")
 
